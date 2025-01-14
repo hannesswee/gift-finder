@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gift Finder Tool</title>
+    <style>
+        /* CSS Variables for Colors */
+        :root {
+            --primary-bg: #2a1a47; /* Dark purple */
+            --secondary-bg: #1f1f1f; /* Dark gray */
+            --text-color: #ffffff;
+            --link-color: #6a5acd; /* Slate blue for links */
+            --hover-link-color: #ff7f50; /* Coral for hover */
+            --button-bg: #6a5acd;
+            --button-hover-bg: #ff7f50;
+            --transition-duration: 0.3s;
+        }
+
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+            transition: background-color var(--transition-duration) ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem 0;
+            animation: fadeIn 1s ease-in;
+        }
+
+        h1 {
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        p {
+            margin: 0;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        form {
+            background: var(--secondary-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 400px;
+            opacity: 0;
+            animation: slideInUp 1s forwards;
+        }
+
+        label {
+            display: block;
+            margin: 1rem 0 0.5rem;
+            opacity: 0;
+            animation: fadeIn 1s 0.5s forwards;
+        }
+
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #ffffff;
+            transition: background-color var(--transition-duration) ease;
+        }
+
+        input[type="number"]:focus,
+        select:focus {
+            background-color: #f1f1f1;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: var(--button-bg);
+            color: var(--text-color);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color var(--transition-duration);
+            width: 100%;
+            opacity: 0;
+            animation: fadeIn 1s 1s forwards;
+        }
+
+        button:hover {
+            background-color: var(--button-hover-bg);
+        }
+
+        #results {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 400px;
+            opacity: 0;
+            animation: fadeIn 1s 1.5s forwards;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 2rem;
+        }
+
+        /* Animation Keyframes */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Button Reset */
+        button[type="button"] {
+            background-color: #444;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Gift Finder Tool by @hannes_swe</h1>
+        <p>Find the perfect gift based on your criteria!</p>
+    </header>
+    
+    <main>
+        <form id="giftForm">
+            <label for="age">Age:</label>
+            <input type="number" id="age" required>
+            
+            <label for="interests">Interests:</label>
+            <select id="interests" required>
+                <option value="">Select Interest</option>
+                <option value="sports">Sports</option>
+                <option value="technology">Technology</option>
+                <option value="art">Art</option>
+                <option value="music">Music</option>
+                <option value="fashion">Fashion</option>
+                <option value="gaming">Gaming</option>
+                <option value="cooking">Cooking</option>
+                <option value="travel">Travel</option>
+                <option value="photography">Photography</option>
+                <option value="fitness">Fitness</option>
+                <option value="reading">Reading</option>
+                <option value="gardening">Gardening</option>
+                <option value="crafting">Crafting</option>
+                <option value="pets">Pets</option>
+                <option value="tech gadgets">Tech Gadgets</option>
+                <option value="home decor">Home Decor</option>
+                <option value="music instruments">Musical Instruments</option>
+                <option value="science">Science</option>
+                <option value="movies">Movies</option>
+                <option value="outdoors">Outdoors</option>
+                <option value="history">History</option>
+            </select>
+            
+            <label for="occasion">Occasion:</label>
+            <select id="occasion" required>
+                <option value="">Select Occasion</option>
+                <option value="birthday">Birthday</option>
+                <option value="holiday">Holiday</option>
+                <option value="graduation">Graduation</option>
+                <option value="anniversary">Anniversary</option>
+                <option value="wedding">Wedding</option>
+                <option value="baby shower">Baby Shower</option>
+                <option value="housewarming">Housewarming</option>
+            </select>
+            
+            <button type="submit">Get Gift Ideas</button>
+            <button type="button" id="resetBtn">Reset</button>
+        </form>
+        
+        <div id="results"></div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 @hannes_swe. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('giftForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const age = document.getElementById('age').value;
+            const interests = document.getElementById('interests').value;
+            const occasion = document.getElementById('occasion').value;
+
+            const giftIdeas = getGiftIdeas(age, interests, occasion);
+            displayResults(giftIdeas);
+        });
+
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            document.getElementById('giftForm').reset();
+            document.getElementById('results').innerHTML = '';
+        });
+
+        function getGiftIdeas(age, interests, occasion) {
+            const gifts = {
+                sports: {
+                    birthday: ["Soccer Ball", "Basketball", "Fitness Tracker", "Tickets to a Sports Event"],
+                    holiday: ["Sports Jersey", "Gym Membership", "Yoga Mat"],
+                    graduation: ["Personal Trainer Session", "Sports Equipment"],
+                    anniversary: ["Couple's Sports Event Tickets"],
+                    wedding: ["Sports Themed Gift Basket"]
+                },
+                technology: {
+                    birthday: ["Smartphone", "Wireless Earbuds", "Smartwatch"],
+                    holiday: ["Smart Speaker", "VR Headset", "Portable Charger"],
+                    graduation: ["Laptop", "Tablet"],
+                    anniversary: ["Smart Home Devices"],
+                    wedding: ["Tech Gifts for Newlyweds"]
+                },
+                art: {
+                    birthday: ["Art Supplies", "Canvas Set", "Art Classes"],
+                    holiday: ["Museum Membership", "Art Prints"],
+                    graduation: ["Art Portfolio"],
+                    anniversary: ["Framed Artwork"],
+                    wedding: ["Personalized Art Piece"]
+                },
+                music: {
+                    birthday: ["Bluetooth Speaker", "Vinyl Records", "Music Lessons"],
+                    holiday: ["Concert Tickets", "Headphones"],
+                    graduation: ["Musical Instrument"],
+                    anniversary: ["Couple's Concert Experience"],
+                    wedding: ["Customized Music Playlist"]
+                },
+                fashion: {
+                    birthday: ["Watch", "Designer Handbag", "Stylish Shoes"],
+                    holiday: ["Gift Card for Clothing Store", "Fashion Accessories"],
+                    graduation: ["Professional Attire"],
+                    anniversary: ["Couple's Jewelry"],
+                    wedding: ["Matching Outfits"]
+                },
+                gaming: {
+                    birthday: ["Gaming Console", "Video Games", "Gaming Chair"],
+                    holiday: ["Gift Cards for Gaming Platforms"],
+                    graduation: ["Gaming Merchandise"],
+                    anniversary: ["Couple's Gaming Night"],
+                    wedding: ["Video Game-themed Gifts"]
+                },
+                cooking: {
+                    birthday: ["Cookbook", "Kitchen Gadgets", "Cooking Class"],
+                    holiday: ["Gourmet Ingredients", "Cooking Utensil Set"],
+                    graduation: ["Personalized Apron"],
+                    anniversary: ["Cooking Together Experience"],
+                    wedding: ["Customized Recipe Book"]
+                },
+                travel: {
+                    birthday: ["Travel Gear", "Luggage Set", "Travel Guide"],
+                    holiday: ["Weekend Getaway"],
+                    graduation: ["Travel Voucher"],
+                    anniversary: ["Couple's Travel Experience"],
+                    wedding: ["Honeymoon Fund"]
+                },
+                photography: {
+                    birthday: ["Camera Accessories", "Photography Class"],
+                    holiday: ["Photo Album"],
+                    graduation: ["Camera"],
+                    anniversary: ["Personalized Photo Shoot"],
+                    wedding: ["Wedding Album"]
+                },
+                fitness: {
+                    birthday: ["Gym Membership", "Fitness Equipment", "Health Tracker"],
+                    holiday: ["Fitness Classes"],
+                    graduation: ["Personal Trainer Sessions"],
+                    anniversary: ["Couple's Fitness Retreat"],
+                    wedding: ["Fitness Gear for Couples"]
+                },
+                reading: {
+                    birthday: ["Books", "E-reader"],
+                    holiday: ["Bookstore Gift Card"],
+                    graduation: ["Book Collection"],
+                    anniversary: ["Personalized Books"],
+                    wedding: ["Couple's Reading Nook"]
+                },
+                gardening: {
+                    birthday: ["Gardening Tools", "Plant Kits"],
+                    holiday: ["Garden Decor"],
+                    graduation: ["Gardening Books"],
+                    anniversary: ["Couple's Garden Experience"],
+                    wedding: ["Personalized Planters"]
+                },
+                crafting: {
+                    birthday: ["Craft Supplies", "DIY Kits"],
+                    holiday: ["Crafting Classes"],
+                    graduation: ["Crafting Books"],
+                    anniversary: ["Couple's Crafting Night"],
+                    wedding: ["Customized Craft Projects"]
+                },
+                pets: {
+                    birthday: ["Pet Toys", "Pet Care Products"],
+                    holiday: ["Pet Food Subscription"],
+                    graduation: ["Pet Training Classes"],
+                    anniversary: ["Couple's Pet Adoption"],
+                    wedding: ["Customized Pet Products"]
+                },
+                "tech gadgets": {
+                    birthday: ["Smart Home Devices", "Tech Accessories"],
+                    holiday: ["Tech Subscription Services"],
+                    graduation: ["Latest Tech Gadgets"],
+                    anniversary: ["Couple's Tech Experience"],
+                    wedding: ["Smart Home Setup"]
+                },
+                "home decor": {
+                    birthday: ["Decorative Items", "Home Fragrance"],
+                    holiday: ["Home Improvement Gift Card"],
+                    graduation: ["Interior Design Consultation"],
+                    anniversary: ["Couple's Home Decor Experience"],
+                    wedding: ["Personalized Home Decor"]
+                },
+                "music instruments": {
+                    birthday: ["Musical Instruments", "Music Lessons"],
+                    holiday: ["Music Accessories"],
+                    graduation: ["Music Equipment"],
+                    anniversary: ["Couple's Musical Experience"],
+                    wedding: ["Customized Music Instruments"]
+                },
+                science: {
+                    birthday: ["Science Kits", "Educational Books"],
+                    holiday: ["Museum Membership"],
+                    graduation: ["Science Gadgets"],
+                    anniversary: ["Couple's Science Experience"],
+                    wedding: ["Science-Themed Gifts"]
+                },
+                movies: {
+                    birthday: ["Movie Tickets", "Streaming Subscriptions"],
+                    holiday: ["Film Collection"],
+                    graduation: ["Movie Production Class"],
+                    anniversary: ["Couple's Movie Night"],
+                    wedding: ["Personalized Movie Poster"]
+                },
+                outdoors: {
+                    birthday: ["Camping Gear", "Outdoor Equipment"],
+                    holiday: ["Outdoor Experience"],
+                    graduation: ["Outdoor Gear"],
+                    anniversary: ["Couple's Outdoor Adventure"],
+                    wedding: ["Outdoor-Themed Gifts"]
+                },
+                history: {
+                    birthday: ["History Books", "Museum Membership"],
+                    holiday: ["Historical Document Replicas"],
+                    graduation: ["History Research Services"],
+                    anniversary: ["Couple's Historical Tour"],
+                    wedding: ["Personalized Historical Gifts"]
+                }
+            };
+
+            return gifts[interests]?.[occasion] || ["No gift ideas found."];
+        }
+
+        function displayResults(giftIdeas) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<h3>Gift Ideas:</h3>' + giftIdeas.map(gift => `<p>${gift}</p>`).join('');
+        }
+    </script>
+</body>
+</html>
